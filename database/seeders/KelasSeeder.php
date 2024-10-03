@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Kelas;
 
@@ -20,8 +19,8 @@ class KelasSeeder extends Seeder
             'D',
         ];
 
-        foreach ($data as $kelas){
-            Kelas::create([
+        foreach ($data as $kelas) {
+            Kelas::firstOrCreate([
                 'nama_kelas' => $kelas,
             ]);
         }
