@@ -30,3 +30,5 @@ Route::get('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 
 Route::get('/user/home', [UserController::class, 'home'])->name('user.home');
+
+Route::get('/user', [UserController::class, 'index']);

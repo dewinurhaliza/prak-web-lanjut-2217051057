@@ -11,6 +11,25 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
+    public $userModel;
+    public $kelasModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->kelasModel = new Kelas();
+    }
+
+    public function index()
+    {
+        $data = [
+            'title' => 'List User',
+            'users' => $this->userModel->getUser(),
+        ];
+    
+        return view('list_user', $data);
+    }
+
     public function profile($nama = '', $kelas = '', $npm = ''){
         $data = [
             'nama' => $nama,
@@ -22,9 +41,21 @@ class UserController extends Controller
     }
 
     public function create(){
-        return view('create_user', [
-            'kelas' => Kelas::all(),
-        ]);
+        // return view('create_user', [
+        //     'kelas' => Kelas::all(),
+        // ]);
+
+        $kelasModel = new Kelas();
+
+        // Mengambil data kelas menggunakan method getKelas
+        $kelas = $kelasModel->getKelas();
+
+        $data = [
+            'title' => 'Create User',
+            'kelas' => $kelas,
+        ];
+
+        return view('create_user', $data);
     }
 
     public function store(UserRequest $request){
@@ -42,17 +73,19 @@ class UserController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
         ]);
 
-        $user = UserModel::create($validatedData);
+        return redirect()->to('/user');
 
-        $user->load('kelas');
+        // $user = UserModel::create($validatedData);
+
+        // $user->load('kelas');
 
         //return view('profile', $data);
 
-        return view('profile', [
-            'nama' => $user->nama,
-            'npm' => $user->npm,
-            'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
-        ]);
+        // return view('profile', [
+        //     'nama' => $user->nama,
+        //     'npm' => $user->npm,
+        //     'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
+        // ]);
     }
 
     public function home() {
