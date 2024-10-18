@@ -9,19 +9,19 @@
         background-color: #f8f9fa;
     }
     .table-striped tbody tr:nth-of-type(even) {
-        background-color: #d1ecf1; 
+        background-color: #d1ecf1;
     }
     .table-striped tbody tr:nth-of-type(3n) {
         background-color: #cce5ff;
     }
     .table-striped tbody tr:nth-of-type(4n) {
-        background-color: #e2e3e5; 
+        background-color: #e2e3e5;
     }
 </style>
 <div>
     <div class="mb-3">
-        <h1>Daftar Pengguna</h1> 
-        <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah User</a>
+        <h1>Daftar Pengguna</h1>
+        <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah Pengguna Baru</a>
     </div>
 
     <div class="table-responsive">
@@ -32,6 +32,7 @@
                     <th scope="col">Nama</th>
                     <th scope="col">NPM</th>
                     <th scope="col" class="text-center">Kelas</th>
+                    <th scope="col" class="text-center">Foto</th>
                     <th scope="col" class="text-center">Aksi</th>
                 </tr>
             </thead>
@@ -42,16 +43,24 @@
                     <td>{{ $user->nama }}</td>
                     <td>{{ $user->npm }}</td>
                     <td class="text-center">{{ $user->nama_kelas }}</td>
+                    <td class="text-center"><img src="{{ Storage::url('uploads/' . $user->foto) }}" alt="Profile Picture" class="profile-img" width="100"></td>
                     <td class="text-center">
-                        <a class="btn btn-warning btn-sm">Edit</a>
-                        <form method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
+
+                    {{-- DETAIL --}}
+                    <a href="{{route('user.show', $user['id']) }}" class="btn btn-success text-center">Detail</a>
+                    {{-- EDIT --}}
+                    <a href="{{ route('user.edit', $user['id']) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                    {{-- DELETE --}}
+                    <form action="{{ route('user.destroy', $user['id']) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Delete</button>
+                    </form>
                     </td>
                 </tr>
-                @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>

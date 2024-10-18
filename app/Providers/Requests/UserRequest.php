@@ -9,10 +9,10 @@ class UserRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    // public function authorize(): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'nama' => 'required',
             'npm' => 'required',
-            'kelas' => 'required'
+            'kelas_id' => 'required'
         ];
     }
 }

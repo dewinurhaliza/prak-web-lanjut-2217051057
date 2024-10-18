@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
@@ -16,25 +16,25 @@
             align-items: center;
         }
         .container {
-            background-color: #ffffff; 
+            background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             max-width: 1100px;
-            max-height: 500px;
+            max-height: 600px;
         }
         .table:hover {
-            background-color: #ffe5b4; 
+            background-color: #ffe5b4;
         }
         .table:nth-of-type(odd) {
             background-color: #f8f9fa;
         }
         .table:nth-of-type(even) {
-            background-color: #d1ecf1; 
+            background-color: #d1ecf1;
         }
         h1 {
             text-align: center;
-            color: #856404; 
+            color: #856404;
             font-weight: 700;
             margin-bottom: 30px;
         }
@@ -50,13 +50,13 @@
             transition: all 0.3s ease;
         }
         .form-control:focus {
-            border-color: #ffc107; 
+            border-color: #ffc107;
             box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
         }
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background-color: #ffc107; 
+            background-color: #ffc107;
             color: #ffffff;
             border: none;
             border-radius: 8px;
@@ -66,11 +66,11 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .btn-submit:hover {
-            background-color: #e0a800; 
+            background-color: #e0a800;
             transform: translateY(-3px);
         }
         .btn-submit:active {
-            background-color: #c69500; 
+            background-color: #c69500;
             transform: translateY(0);
         }
         .table-hover tbody tr:hover {
@@ -86,6 +86,7 @@
             font-size: 0.9rem;
             color: #6c757d;
             box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+            height: 50px;
         }
     </style>
 </head>

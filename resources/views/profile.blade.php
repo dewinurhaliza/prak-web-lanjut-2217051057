@@ -96,20 +96,22 @@
             <h1>Profil Mahasiswa</h1>
         </div>
 
+        <div>{{ $user->foto ? asset($user->foto) : 'Foto tidak tersedia' }}</div>
+        
         <div class="table-container">
             <table class="table">
                 <tr> 
                     <td>Nama</td> 
-                    <td><input type="text" value="<?= $nama ?>"></td> 
-                </tr> 
+                    <td><input type="text" value="{{ $nama }}"></td>
+                    </tr> 
                 <tr> 
                     <td>Kelas</td> 
-                    <td><input type="text" value="<?= $nama_kelas ?? 'Kelas tidak ditemukan' ?>"></td> 
-                </tr> 
+                    <td><input type="text" value="{{ $kelas ?? 'Kelas tidak ditemukan' }}"></td>
+                    </tr> 
                 <tr> 
                     <td>NPM</td> 
-                    <td><input type="text" value="<?= $npm ?>"></td> 
-                </tr> 
+                    <td><input type="text" value="{{ $npm }}"></td>
+                    </tr> 
             </table>
         </div>
 
