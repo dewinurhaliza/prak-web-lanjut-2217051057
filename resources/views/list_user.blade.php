@@ -46,12 +46,12 @@
                     <td class="text-center"><img src="{{ Storage::url('uploads/' . $user->foto) }}" alt="Profile Picture" class="profile-img" width="100"></td>
                     <td class="text-center">
 
-                    {{-- DETAIL --}}
+                    {{--TOMBOL DETAIL --}}
                     <a href="{{route('user.show', $user['id']) }}" class="btn btn-success text-center">Detail</a>
-                    {{-- EDIT --}}
+                    {{--TOMBOL EDIT --}}
                     <a href="{{ route('user.edit', $user['id']) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                    {{-- DELETE --}}
+                    {{--TOMBOL DELETE --}}
                     <form action="{{ route('user.destroy', $user['id']) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')

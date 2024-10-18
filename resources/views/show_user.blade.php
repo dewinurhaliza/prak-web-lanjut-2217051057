@@ -50,7 +50,10 @@
 </style>
 
 <div class="card">
+    <!-- Menampilkan gambar profil pengguna -->
     <img src="{{ Storage::url('uploads/' . $user->foto) }}" alt="Profile Picture" class="profile-img">
+
+    <!-- Menampilkan informasi pengguna (nama, npm, dan kelas) -->
     <div class="info">
         <h1 class="label">{{ $user->nama }}</h1>
         <h1 class="label">{{ $user->npm }}</h1>
