@@ -56,8 +56,11 @@
     <!-- Menampilkan informasi pengguna (nama, npm, dan kelas) -->
     <div class="info">
         <h1 class="label">{{ $user->nama }}</h1>
-        <h1 class="label">{{ $user->npm }}</h1>
+        {{-- <h1 class="label">{{ $user->npm }}</h1> --}}
+        <h1 class="label">{{ $user->semester }}</h1>
         <h1 class="label">{{ $nama_kelas ?? 'Kelas tidak ditemukan' }}</h1>
+        <h1 class="label">{{ $user->fakultas->nama_fakultas}}</h1>
+        <h1 class="label">{{ $user->jurusan }}</h1>
         <a href="{{ route('user.list') }}" class="btn-kembali">Kembali ke List</a>
     </div>
 </div>

@@ -30,8 +30,11 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nama</th>
-                    <th scope="col">NPM</th>
+                    {{-- <th scope="col">NPM</th> --}}
                     <th scope="col" class="text-center">Kelas</th>
+                    <th scope="col" class="text-center">Semester</th>
+                    <th scope="col" class="text-center">Fakultas</th>
+                    <th scope="col" class="text-center">Jurusan</th>
                     <th scope="col" class="text-center">Foto</th>
                     <th scope="col" class="text-center">Aksi</th>
                 </tr>
@@ -41,8 +44,11 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->nama }}</td>
-                    <td>{{ $user->npm }}</td>
-                    <td class="text-center">{{ $user->nama_kelas }}</td>
+                    {{-- <td>{{ $user->npm }}</td> --}}
+                    <td class="text-center">{{ $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan' }}</td>
+                    <td class="text-center">{{ $user->semester }}</td>
+                    <td class="text-center">{{ $user->fakultas->nama_fakultas ?? 'Kelas tidak ditemukan'}}</td>
+                    <td class="text-center">{{ $user->jurusan}}</td>
                     <td class="text-center"><img src="{{ Storage::url('uploads/' . $user->foto) }}" alt="Profile Picture" class="profile-img" width="100"></td>
                     <td class="text-center">
 
@@ -60,7 +66,7 @@
                     </form>
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>

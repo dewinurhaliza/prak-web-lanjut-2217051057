@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\UserModel;
+use App\Models\Fakultas;
 
 class UserController extends Controller
 {
@@ -18,8 +19,8 @@ class UserController extends Controller
         $this->kelasModel = new Kelas();
     }
 
-    public function index()
-{
+
+    public function index(){
     $data = [
         'title' => 'List User',
         'users' => $this->userModel->getUser(),
@@ -34,10 +35,12 @@ public function create(){
 
     // Mengambil data kelas menggunakan method getKelas
     $kelas = $kelasModel->getKelas();
+    $fakultas = Fakultas::all();
 
     $data = [
         'title' => 'Create User',
         'kelas' => $kelas,
+        'fakultas' => $fakultas,
     ];
 
     return view('create_user', $data);
@@ -45,25 +48,31 @@ public function create(){
 
 public function store(Request $request)
 {
-    // Validasi input
-    $request->validate([
-        'nama' => 'required',
-        'npm' => 'required',
-        'kelas_id' => 'required',
-        'foto' => 'image|file|max:2048', // Validasi foto
-    ]);
+    // // Validasi input
+    // $request->validate([
+    //     'nama' => 'required',
+    //     // 'npm' => 'required',
+    //     'kelas_id' => 'required',
+    //     'semester'=>'required|integer',
+    //     'jurusan'=>'required',
+    //     'fakultas_id' => 'required|integer',
+    //     'foto' => 'image|file|max:2048', // Validasi foto
+    // ]);
 
     // Proses upload foto
     if ($request->hasFile('foto')) {
         $file = $request->file('foto');
         $filename = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('uploads', $filename); // Menyimpan file ke storage
+        $file->storeAs('public/uploads', $filename); // Menyimpan file ke storage
 
         // Simpan data user ke database
         $this->userModel->create([
             'nama' => $request->input('nama'),
-            'npm' => $request->input('npm'),
+            // 'npm' => $request->input('npm'),
             'kelas_id' => $request->input('kelas_id'),
+            'semester'=> $request->input('semester'),
+            'jurusan'=> $request->input('jurusan'),
+            'fakultas_id' => $request->input('fakultas_id'),
             'foto' => $filename, // Menyimpan nama file ke database
         ]);
     }
@@ -75,38 +84,42 @@ public function edit($id){
     $user = UserModel::findOrFail($id);
     $kelasModel = new Kelas();
     $kelas = $kelasModel->getKelas();
+    $fakultas = Fakultas::all();
+
     $title = 'Edit User';
-    return view('edit_user', compact('user', 'kelas', 'title'));
+    return view('edit_user', compact('user', 'kelas', 'fakultas', 'title'));
 }
 
-public function update(Request $request, $id){
+public function update(Request $request, $id)
+{
+    // $request->validate([
+    //     'nama' => 'required',
+    //     'kelas_id' => 'required',
+    //     'fakultas_id' => 'required',
+    //     'semester' => 'required|integer',
+    //     'jurusan' => 'required',
+    //     'foto' => 'image|file|max:2048',
+    // ]);
+
     $user = UserModel::findOrFail($id);
 
     // Update data user lainnya
     $user->nama = $request->nama;
-    $user->npm = $request->npm;
     $user->kelas_id = $request->kelas_id;
+    $user->fakultas_id = $request->fakultas_id;
+   // $user->semester = $request->semester;
+    $user->jurusan = $request->jurusan;
 
     // Cek apakah ada file foto yang di-upload
     if ($request->hasFile('foto')) {
-        // Ambil nama file foto lama dari database
-        $oldFilename = $user->foto;
-
         // Hapus foto lama jika ada
-        if ($oldFilename) {
-            $oldFilePath = public_path('storage/uploads/' . $oldFilename);
-            // Cek apakah file lama ada dan hapus
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath); // Hapus foto lama dari folder
-            }
+        if ($user->foto && file_exists(storage_path('app/public/uploads/' . $user->foto))) {
+            unlink(storage_path('app/public/uploads/' . $user->foto));
         }
 
-        // Simpan file baru dengan storeAs
-        $file = $request->file('foto');
-        $newFilename = time() . '_' . $file->getClientOriginalName();
-        $file->storeAs('uploads', $newFilename, 'public'); // Menyimpan file ke folder uploads dalam storage/public
-
-        // Update nama file di database
+        // Simpan file baru
+        $newFilename = time() . '_' . $request->file('foto')->getClientOriginalName();
+        $request->file('foto')->storeAs('public/uploads', $newFilename);
         $user->foto = $newFilename;
     }
 
@@ -115,6 +128,7 @@ public function update(Request $request, $id){
 
     return redirect()->route('user.list')->with('success', 'User Berhasil di Update');
 }
+
 
 public function destroy($id){
     $user = UserModel::findOrFail($id);
@@ -126,7 +140,8 @@ public function destroy($id){
 public function show($id){
 
     $user = UserModel::findOrFail($id);
-    $kelas = Kelas::find($user->kelas_id); // Jika ingin menampilkan nama kelas
+    $kelas = Kelas::find($user->kelas_id);
+    $fakultas = Fakultas::find($user->fakultas_id);// Jika ingin menampilkan nama kelas
 
     return view('show_user', [
         'title' => 'Show User',
